@@ -1,0 +1,14 @@
+{
+  "id": "bardforge-receiver",
+  "title": "BardForge Receiver",
+  "description": "Receive a live BardForge Studio audio mix with individual player volume. Requires an authenticated signaling relay and WebRTC connectivity.",
+  "version": "0.1.0",
+  "compatibility": { "minimum": "13" },
+  "authors": [{ "name": "BardForge Studio contributors" }],
+  "esmodules": ["scripts/module.js"],
+  "styles": ["styles/receiver.css"],
+  "languages": [
+    { "lang": "en", "name": "English", "path": "lang/en.json" },
+    { "lang": "ru", "name": "Русский", "path": "lang/ru.json" }
+  ]
+}

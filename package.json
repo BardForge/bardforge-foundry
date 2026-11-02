@@ -1,0 +1,29 @@
+{
+  "name": "bardforge-foundry",
+  "version": "0.1.0-dev.1",
+  "private": true,
+  "type": "module",
+  "description": "Optional BardForge Foundry receiver and authenticated WebRTC signaling relay",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "test": "node --test tests/*.node.test.mjs",
+    "test:browser": "node tests/transport.browser.mjs",
+    "package:module": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-module.ps1",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:public": "node scripts/check-public.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "eslint": "10.14.0",
+    "globals": "17.0.0",
+    "prettier": "3.9.10"
+  },
+  "overrides": {
+    "minimatch": "11.0.3"
+  }
+}

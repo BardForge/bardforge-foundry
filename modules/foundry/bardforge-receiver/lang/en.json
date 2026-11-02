@@ -1,0 +1,30 @@
+{
+  "BARDFORGE": {
+    "url": "BardForge relay URL",
+    "urlHint": "WSS URL ending in /relay. Unencrypted WS is only allowed for localhost testing.",
+    "room": "BardForge room",
+    "roomHint": "Room configured by your relay administrator (letters, digits, hyphens, underscores).",
+    "token": "Listener key",
+    "tokenHint": "Shared listening key, visible to world users. Never enter the publisher key here. Minimum 32 characters.",
+    "stun": "STUN address (optional)",
+    "stunHint": "Ask your relay administrator, for example stun:stun.example.org:3478.",
+    "turn": "TURN address (optional)",
+    "turnHint": "Internet sessions generally need TURN, for example turns:turn.example.org:5349.",
+    "turnUsername": "TURN username",
+    "turnUsernameHint": "Credentials are visible to world users; use limited-lifetime credentials.",
+    "turnPassword": "TURN password",
+    "turnPasswordHint": "Provided by your TURN administrator; never reuse your publisher key.",
+    "relayOnly": "Require TURN relay (hide direct peer addresses)",
+    "volume": "Your BardForge volume",
+    "enable": "Enable audio",
+    "disable": "Disable audio",
+    "idle": "Audio off",
+    "connecting": "Connecting…",
+    "waiting": "Waiting for the GM’s broadcast",
+    "live": "Receiving live audio",
+    "reconnecting": "Reconnecting…",
+    "auth-error": "Incorrect listener key or room",
+    "error": "Connection rejected",
+    "configurationError": "Check relay settings and browser audio permission"
+  }
+}
