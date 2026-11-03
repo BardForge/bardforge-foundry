@@ -8,6 +8,7 @@ $manifest = Get-Content -LiteralPath (Join-Path $moduleRoot 'module.json') -Raw 
 if ($manifest.id -ne 'bardforge-receiver' -or $manifest.version -notmatch '^\d+\.\d+\.\d+$') { throw 'Unexpected module identity/version' }
 if ($manifest.compatibility.minimum -ne '13' -or $manifest.compatibility.PSObject.Properties.Name -contains 'verified') { throw 'Unexpected compatibility claim' }
 $files = @('module.json', 'scripts/client.js', 'scripts/client.d.ts', 'scripts/module.js', 'styles/receiver.css', 'lang/en.json', 'lang/ru.json')
+$notices = @('README.md', 'LICENSE', 'LICENSING.md', 'THIRD_PARTY.md', 'CHANGELOG.md')
 $distRoot = [IO.Path]::GetFullPath((Join-Path $projectRoot 'dist'))
 if (-not $distRoot.StartsWith($projectRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'Invalid output path' }
 New-Item -ItemType Directory -Force -Path $distRoot | Out-Null
@@ -19,12 +20,14 @@ try {
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw "Missing file: $relative" }
     [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, $source, ('bardforge-receiver/' + $relative), [IO.Compression.CompressionLevel]::Optimal) | Out-Null
   }
-  [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, (Join-Path $projectRoot 'README.md'), 'bardforge-receiver/README.md', [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+  foreach ($notice in $notices) {
+    [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, (Join-Path $projectRoot $notice), ('bardforge-receiver/' + $notice), [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+  }
 } finally { $archive.Dispose() }
 
 $check = [IO.Compression.ZipFile]::OpenRead($archivePath)
 try {
-  $expected = @($files | ForEach-Object { 'bardforge-receiver/' + $_ }) + @('bardforge-receiver/README.md')
+  $expected = @($files | ForEach-Object { 'bardforge-receiver/' + $_ }) + @($notices | ForEach-Object { 'bardforge-receiver/' + $_ })
   if (@(Compare-Object ($expected | Sort-Object) ($check.Entries.FullName | Sort-Object)).Count -ne 0) { throw 'ZIP contents differ from public allowlist' }
   $reader = [IO.StreamReader]::new($check.GetEntry('bardforge-receiver/module.json').Open())
   try { $packedManifest = $reader.ReadToEnd() | ConvertFrom-Json } finally { $reader.Dispose() }
